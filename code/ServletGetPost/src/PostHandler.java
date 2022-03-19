@@ -3,7 +3,10 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,13 +42,24 @@ public class PostHandler extends HttpServlet {
 		// TODO Auto-generated method stub
 		{
 		PrintWriter out = response.getWriter();
-        out.println("<html><body>");
+        
         
         String name = request.getParameter("name");
         String address = request.getParameter("address");
+        if (name.equalsIgnoreCase("Shubrota")) {
+        	request.setAttribute(name, "correct");
+        	
+        	RequestDispatcher rd = request.getRequestDispatcher("Welcome.html");
+        	rd.forward(request, response);
+        }else {
+        	request.setAttribute(name, "Wrong");
+        	
+        	RequestDispatcher rd = request.getRequestDispatcher("Error.html");
+        	rd.include(request, response);
+        }
         
-        out.println("Name=" + name + "<br>Address=" + address);
-        out.println("</body></html>");
+        
+        
 }
 
 	}
